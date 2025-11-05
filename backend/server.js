@@ -3,14 +3,14 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const todoRoutes = require('./routes/todoRoutes');
-
+const userRoutes = require('./routes/userRoutes');
 connectDB();
 const app = express();
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/todos', todoRoutes);
-
+app.use('/api/users', userRoutes);
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
