@@ -10,8 +10,8 @@ import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Routes>
           {/* Public Routes - Accessible to anyone */}
           <Route path="/login" element={<LoginPage />} />
@@ -28,8 +28,8 @@ function App() {
           {/* Fallback route for 404 Not Found */}
           <Route path="*" element={<Navigate replace to="/dashboard" />} />
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 export default App;

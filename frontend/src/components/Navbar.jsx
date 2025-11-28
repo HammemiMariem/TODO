@@ -6,29 +6,6 @@ const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = (e) => {
-    e?.preventDefault();
-    e?.stopPropagation();
-    
-    console.log('Logout button clicked');
-    
-    try {
-      // Clear token from localStorage immediately
-      localStorage.removeItem('token');
-      console.log('Token removed from localStorage');
-      
-      // Call logout to update context state
-      logout();
-      
-      // Force navigation with a hard redirect to ensure clean state
-      // Using replace prevents back button from going back to dashboard
-      window.location.replace('/login');
-    } catch (error) {
-      console.error('Error during logout:', error);
-      // Fallback: try direct navigation
-      window.location.href = '/login';
-    }
-  };
 
   if (!isAuthenticated) {
     return null;
@@ -56,7 +33,7 @@ const Navbar = () => {
             </Link>
             <button
               type="button"
-              onClick={handleLogout}
+              onClick={logout}
               className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
             >
               Logout
