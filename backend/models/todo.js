@@ -4,10 +4,23 @@ const todoSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: false,
     },
     description: {
       type: String,
+    },
+    priority: {
+      type: String,
+      enum: ['low', 'medium', 'high'],
+      default: 'medium',
+    },
+    deadline: {
+      type: Date,
+    },
+    progress: {
+      type: String,
+      enum: ['not started', 'in progress', 'completed'],
+      default: 'not started',
     },
     completed: {
       type: Boolean,
