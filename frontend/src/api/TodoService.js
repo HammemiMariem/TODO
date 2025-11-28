@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api/todos';
+const API_URL = 'https://todo-backend-eqln.onrender.com/api/todos';
 
 // Helper function to get the token for authorized requests
 const getAuthHeaders = () => {

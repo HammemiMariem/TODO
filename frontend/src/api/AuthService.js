@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api/auth';
+const API_URL = 'https://todo-backend-eqln.onrender.com/api/auth';
 /**
  * Sends a new user registration request to the backend.
  * @param {string} username 
