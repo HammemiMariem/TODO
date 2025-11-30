@@ -68,3 +68,53 @@ export const loginUser = async ({ email, password }) => {
         throw error;
     }
 };
+
+/**
+ * Fetches the current user's profile from the backend.
+ * @returns {Promise<object>} The user profile data (username, email, address, picture).
+ */
+export const getUserProfile = async () => {
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('No authentication token found');
+        }
+
+        const response = await fetch(`${API_URL}/profile`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        // Get response text first to check if it's JSON
+        const text = await response.text();
+        
+        // Check if response is JSON
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (parseError) {
+            // If parsing fails, it's likely HTML or plain text
+            console.error('Failed to parse response as JSON:', text.substring(0, 200));
+            if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+                throw new Error('Server returned an HTML page instead of JSON. The backend endpoint may not be configured correctly.');
+            }
+            throw new Error(`Server returned invalid response. Status: ${response.status}`);
+        }
+
+        if (!response.ok) {
+            throw new Error(data.message || `Failed to fetch profile (Status: ${response.status})`);
+        }
+
+        return data;
+    } catch (error) {
+        console.error("Get profile error:", error);
+        // Re-throw with a more user-friendly message if it's a JSON parse error
+        if (error.message.includes('JSON') || error.message.includes('<!DOCTYPE') || error.message.includes('HTML')) {
+            throw new Error('Unable to connect to server. Please check if the backend is running and the /api/auth/profile endpoint exists.');
+        }
+        throw error;
+    }
+};

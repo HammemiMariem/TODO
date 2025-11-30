@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 // 1. Create the Context object
 const AuthContext = createContext();
 
@@ -17,7 +16,6 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(getToken());
     // State to track loading status (useful for initial check)
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
 
     // 3. useEffect to initialize and update state based on token changes
     useEffect(() => {
@@ -40,7 +38,6 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         localStorage.removeItem('token'); // Remove the JWT
         setToken(null); // Clear state immediately
-        navigate('/login'); // Redirect to login page
         
     };
 

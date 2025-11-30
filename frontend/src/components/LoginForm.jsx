@@ -41,7 +41,7 @@ const LoginForm = ({ onSubmit, isLoading, errorMessage }) => {
             </div>
           )}
 
-          <div className="rounded-md shadow-sm space-y-4">
+          <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email" className="sr-only">
                 Email address

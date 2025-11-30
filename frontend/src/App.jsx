@@ -7,11 +7,12 @@ import './App.css';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
+import UserProfilePage from './pages/UserProfilePage';
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
+    <AuthProvider>
+      <BrowserRouter>
         <Routes>
           {/* Public Routes - Accessible to anyone */}
           <Route path="/login" element={<LoginPage />} />
@@ -23,13 +24,14 @@ function App() {
           {/* Protected Routes - Nested under the ProtectedRoute component */}
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<UserProfilePage />} />
           </Route>
 
           {/* Fallback route for 404 Not Found */}
           <Route path="*" element={<Navigate replace to="/dashboard" />} />
         </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 export default App;

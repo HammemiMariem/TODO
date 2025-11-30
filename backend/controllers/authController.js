@@ -51,12 +51,14 @@ exports.loginUser = async (req, res) => {
 };
 //get user profile
 exports.getUserProfile = async (req, res) => {
-    const user = req.User;
+    const user = req.user;
     if (user) {
       res.json({
-        _id: user._id,
+        _id: user.id,
         username: user.username,
         email: user.email,
+        address: user.address || '',
+        picture: user.picture || '',
       });  
     } else {
       res.status(404).json({ message: 'User not found' });
@@ -64,20 +66,31 @@ exports.getUserProfile = async (req, res) => {
   }; 
 //update user profile
 exports.updateUserProfile = async (req, res) => {
-    const user = req.User;  
-    if (user) {
-      user.username = req.body.username || user.username;
-      user.email = req.body.email || user.email;
-      if (req.body.password) {
-        user.password = req.body.password;
-      }
-      const updatedUser = await user.save();
-      res.json({
-        _id: updatedUser.id,
-        username: updatedUser.username,
-        email: updatedUser.email,
-        token: generateToken(updatedUser._id),
-      });
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }};
+  try {
+    const user = req.user;  
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.username = req.body.username || user.username;
+    user.email = req.body.email || user.email;
+    user.address = req.body.address !== undefined ? req.body.address : user.address;
+    user.picture = req.body.picture !== undefined ? req.body.picture : user.picture;
+    
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    
+    const updatedUser = await user.save();
+    res.json({
+      _id: updatedUser.id,
+      username: updatedUser.username,
+      email: updatedUser.email,
+      address: updatedUser.address || '',
+      picture: updatedUser.picture || '',
+      token: generateToken(updatedUser._id),
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
