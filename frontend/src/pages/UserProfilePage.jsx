@@ -124,11 +124,6 @@ const UserProfilePage = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">Email</label>
                 <p className="text-lg text-gray-900">{profile?.email || 'N/A'}</p>
               </div>
-
-              <div className="pb-4">
-                <label className="block text-sm font-medium text-gray-500 mb-1">Address</label>
-                <p className="text-lg text-gray-900">{profile?.address || 'No address provided'}</p>
-              </div>
             </div>
           </div>
         </div>
